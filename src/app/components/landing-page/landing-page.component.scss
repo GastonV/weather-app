@@ -1,0 +1,18 @@
+.landing-logo {
+  min-width: 150px;
+  width: 20%;
+  transition: filter 0.1s, transform 1s;
+
+  &:hover {
+    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.2));
+    transform: scale(1.5);
+  }
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+

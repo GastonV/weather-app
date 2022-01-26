@@ -1,0 +1,16 @@
+.weather-logo {
+  max-height: 50px;
+  max-width: 150px;
+  padding: 20px;
+}
+
+.input-form {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+
+.slider-input {
+  display: flex;
+  flex-direction: column;
+}
