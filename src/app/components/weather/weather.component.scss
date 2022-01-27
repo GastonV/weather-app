@@ -8,9 +8,28 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 8px;
+
 }
 
 .slider-input {
   display: flex;
   flex-direction: column;
+  touch-action: pinch-zoom;
+}
+
+.weather-table {
+  width: 100%;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+.show {
+  display: none;
+}
+.mat-header-row{
+  font-size:30px !important;
+  color: red !important;;
 }

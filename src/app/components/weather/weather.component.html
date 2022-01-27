@@ -1,73 +1,85 @@
-<div class="weather-logo">
-  <a routerLink="/landing-page">
-    <app-logo></app-logo>
-  </a>
-</div>
+<div class="content-wrapper">
+  <div class="weather-logo">
+    <a routerLink="/landing-page">
+      <app-logo></app-logo>
+    </a>
+  </div>
 
-<div>
-  <!--  TODO: Add space between logo and form -->
-  <form [formGroup]="weatherForm" class="input-form">
-    <div class="slider-input">
-      <mat-form-field appearance="fill">
+  <div>
+    <form [formGroup]="weatherForm" class="input-form">
+      <div class="slider-input">
+        <mat-form-field appearance="fill">
+          <mat-label>Latitude</mat-label>
+          <input
+            formControlName="latitude"
+            matInput
+            placeholder="Latitude"
+            type="number" />
+          <mat-error
+            *ngIf="weatherForm.get('latitude')?.hasError('min') || weatherForm.get('latitude')?.hasError('max')">
+            Not in range
+          </mat-error>
 
-        <mat-label>Latitude</mat-label>
-        <input
-          formControlName="latitude"
-          matInput
-          placeholder="Latitude"
-          type="number" />
-        <mat-error *ngIf="weatherForm.get('latitude')?.hasError('min')|| weatherForm.get('latitude')?.hasError('max')">
-          Not in range
-        </mat-error>
-        <!--  TODO requared error msg-->
-      </mat-form-field>
-    </div>
-    <div class="slider-input">
-      <mat-form-field appearance="fill">
-        <mat-label>Latitude</mat-label>
-        <input
-          formControlName="longitude"
-          matInput
-          placeholder="Latitude"
-          type="number" />
-        <mat-error
-          *ngIf="weatherForm.get('longitude')?.hasError('min')|| weatherForm.get('longitude')?.hasError('max')">
-          Not in range
-        </mat-error>
-        <!--  TODO requared error msg-->
-      </mat-form-field>
-    </div>
-  </form>
-</div>
-<div>
-  <!--  TODO: Add spinner loader when data is loading -->
+          <mat-error
+            *ngIf="weatherForm.get('latitude')?.hasError('required') || (weatherForm.get('latitude')?.touched && !weatherForm.get('latitude')?.value)">
+            <p>Value is required</p>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="slider-input">
+        <mat-form-field appearance="fill">
+          <mat-label>Longitude</mat-label>
+          <input
+            formControlName="longitude"
+            matInput
+            placeholder="Longitude"
+            type="number" />
+          <mat-error
+            *ngIf="weatherForm.get('longitude')?.hasError('min') || weatherForm.get('longitude')?.hasError('max')">
+            Not in range
+          </mat-error>
+
+          <mat-error
+            *ngIf="weatherForm.get('longitude')?.hasError('required')">
+            <p>Value is required</p>
+          </mat-error>
+
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
   <div>
     <mat-button-toggle (click)="getWeather()">Check the forecast</mat-button-toggle>
   </div>
-  <div *ngIf="dataSource.length">
-    <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No.</th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
+  <mat-spinner *ngIf="spinner"></mat-spinner>
 
+  <div class="mat-elevation-z8 {{show}}">
+    <table mat-table class="weather-table" [dataSource]="dataSource" matSort
+    >
       <ng-container matColumnDef="Time">
-        <th mat-header-cell *matHeaderCellDef> Time</th>
-        <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="time"> Time</th>
+        <td mat-cell *matCellDef="let element"> {{element.time | date:'shortTime' }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Temperature">
-        <th mat-header-cell *matHeaderCellDef> Temperature</th>
-        <td mat-cell *matCellDef="let element"> {{element.temperature}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="temperature"> Temperature</th>
+        <td mat-cell *matCellDef="let element"> {{element.temperature | number: '2.2' }}℃</td>
       </ng-container>
 
       <ng-container matColumnDef="Humidity">
-        <th mat-header-cell *matHeaderCellDef> Humidity</th>
-        <td mat-cell *matCellDef="let element"> {{element.humidity}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="humidity"> Humidity</th>
+        <td mat-cell *matCellDef="let element"> {{element.humidity | number: '2.1-2'}}%</td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" ></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                   aria-label="Select page of periodic elements"
+                   showFirstLastButtons
+                   class="table__paginator">
+
+    </mat-paginator>
   </div>
 </div>
+
