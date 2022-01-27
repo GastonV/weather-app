@@ -17,6 +17,8 @@ import { LandingPageComponent } from "./components/landing-page/landing-page.com
 import { LogoComponent } from "./components/logo/logo.component";
 import { RouterModule } from "@angular/router";
 import { WeatherComponent } from "./components/weather/weather.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { WeatherComponent } from "./components/weather/weather.component";
     ReactiveFormsModule,
     FormsModule,
     MatTableModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
 
   providers: [
