@@ -21,6 +21,7 @@ import { WeatherComponent } from "./components/weather/weather.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { MatSortModule } from "@angular/material/sort";
   ],
 
   providers: [
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],
   bootstrap: [AppComponent]
 })
